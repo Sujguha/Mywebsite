@@ -59,6 +59,18 @@
   .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
   .nav a:hover{color:var(--go);}
 
+  .hero-top{display:flex; gap:32px; align-items:flex-start;}
+  .hero-photo{
+    width:132px; height:132px; border-radius:8px; object-fit:cover;
+    border:1px solid var(--border); flex-shrink:0;
+    filter:grayscale(15%);
+  }
+  .hero-text{flex:1; min-width:0;}
+  @media (max-width:560px){
+    .hero-top{flex-direction:column; align-items:flex-start;}
+    .hero-photo{width:96px; height:96px;}
+  }
+
   /* ---------- hero ---------- */
   .hero{padding:72px 0 56px; border-bottom:1px solid var(--border);}
   .status-badge{
@@ -187,9 +199,14 @@
 
   <section class="hero" style="border-top:none;">
     <div class="status-badge"><span class="status-dot"></span>OPEN FOR ASSIGNMENTS</div>
-    <h1>Sujoy G.</h1>
-    <p class="tagline">Release &amp; Transformation Manager — SAP S/4HANA programs, IT governance, and AI-augmented decisioning, built over 18+ years across Siemens, Fiserv, Wirecard, DBS, HSBC, and Capgemini.</p>
-    <div class="version-tag">v18.2026 <span>· stable · production-tested across 6 employers, 8 countries</span></div>
+    <div class="hero-top">
+      <img src="profile.png" alt="Sujoy G." class="hero-photo">
+      <div class="hero-text">
+        <h1>Sujoy G.</h1>
+        <p class="tagline">Release &amp; Transformation Manager — SAP S/4HANA programs, IT governance, and AI-augmented decisioning, built over 18+ years across Siemens, Fiserv, Wirecard, DBS, HSBC, and Capgemini.</p>
+        <div class="version-tag">v18.2026 <span>· stable · production-tested across 6 employers, 8 countries</span></div>
+      </div>
+    </div>
     <div class="hero-meta">
       <div>Based in <span>Munich, Germany</span></div>
       <div>Languages <span>English (professional), German (B2)</span></div>
