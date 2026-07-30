@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sujoy G. — Release &amp; Transformation Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151A;
+    --surface: #1A1F27;
+    --surface-2: #20262F;
+    --border: #2B323D;
+    --text: #E7EAEE;
+    --text-dim: #8A93A3;
+    --text-faint: #5B6472;
+    --go: #3FD9A0;
+    --hold: #F0A83A;
+    --risk: #E5637A;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:0.15;
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:rgba(18,21,26,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .brand{font-family:var(--mono); font-size:13px; color:var(--text-dim); letter-spacing:0.5px;}
+  .brand b{color:var(--text);}
+  .nav{display:flex; gap:22px; font-family:var(--mono); font-size:12.5px;}
+  .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .nav a:hover{color:var(--go);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 56px; border-bottom:1px solid var(--border);}
+  .status-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.5px;
+    color:var(--go); background:rgba(63,217,160,0.08);
+    border:1px solid rgba(63,217,160,0.35);
+    padding:5px 12px; border-radius:3px; margin-bottom:28px;
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--go); box-shadow:0 0 8px var(--go); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:44px; line-height:1.15;
+    letter-spacing:-0.5px; margin-bottom:14px; color:#fff;
+  }
+  .tagline{font-size:18px; color:var(--text-dim); max-width:640px; margin-bottom:28px;}
+  .version-tag{font-family:var(--mono); font-size:13px; color:var(--text-faint);}
+  .version-tag span{color:var(--hold);}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:32px; font-family:var(--mono); font-size:12.5px; color:var(--text-dim);}
+  .hero-meta div span{color:var(--text);}
+
+  /* ---------- section shell ---------- */
+  section{padding:56px 0; border-bottom:1px solid var(--border);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:32px;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--go);}
+  .sec-title{font-size:22px; font-weight:700; color:#fff;}
+  .sec-sub{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-left:auto;}
+
+  /* ---------- about ---------- */
+  .about-body{color:var(--text-dim); font-size:15.5px; max-width:720px;}
+  .about-body p{margin-bottom:16px;}
+  .about-body strong{color:var(--text); font-weight:600;}
+
+  /* ---------- changelog (experience) ---------- */
+  .log-entry{
+    display:grid; grid-template-columns:150px 1fr; gap:24px;
+    padding:22px 0; border-top:1px solid var(--border);
+  }
+  .log-entry:first-of-type{border-top:none;}
+  .log-when{font-family:var(--mono); font-size:12px; color:var(--text-faint); padding-top:3px;}
+  .log-tag{
+    display:inline-block; font-family:var(--mono); font-size:10.5px; letter-spacing:0.5px;
+    padding:2px 7px; border-radius:3px; margin-bottom:8px;
+  }
+  .tag-released{color:var(--go); background:rgba(63,217,160,0.1); border:1px solid rgba(63,217,160,0.3);}
+  .tag-progress{color:var(--hold); background:rgba(240,168,58,0.1); border:1px solid rgba(240,168,58,0.3);}
+  .log-title{font-size:16.5px; font-weight:600; color:#fff; margin-bottom:6px;}
+  .log-org{font-size:13px; color:var(--text-faint); margin-bottom:10px; font-family:var(--mono);}
+  .log-desc{font-size:14.5px; color:var(--text-dim); margin-bottom:10px;}
+  .log-quals{display:flex; flex-wrap:wrap; gap:6px;}
+  .qual-chip{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); border:1px solid var(--border); padding:2px 8px; border-radius:12px;}
+
+  /* ---------- projects grid ---------- */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .proj-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:6px;
+    padding:20px; transition:border-color .15s, transform .15s;
+  }
+  .proj-card:hover{border-color:var(--go); transform:translateY(-2px);}
+  .proj-id{font-family:var(--mono); font-size:11px; color:var(--go); margin-bottom:8px;}
+  .proj-title{font-size:15px; font-weight:600; color:#fff; margin-bottom:8px;}
+  .proj-desc{font-size:13.5px; color:var(--text-dim);}
+
+  /* ---------- skills ---------- */
+  .skill-groups{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .skill-group-title{font-family:var(--mono); font-size:12px; color:var(--hold); letter-spacing:0.5px; margin-bottom:12px;}
+  .skill-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-pill{
+    font-size:13px; color:var(--text-dim); background:var(--surface);
+    border:1px solid var(--border); padding:5px 12px; border-radius:4px;
+  }
+
+  /* ---------- certifications ---------- */
+  .cert-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;}
+  .cert-item{
+    font-family:var(--mono); font-size:12.5px; color:var(--text-dim);
+    border-left:2px solid var(--go); padding:6px 0 6px 12px;
+  }
+
+  /* ---------- contact ---------- */
+  .contact{padding:64px 0 80px; border-bottom:none;}
+  .contact-title{font-size:28px; font-weight:700; color:#fff; margin-bottom:12px;}
+  .contact-sub{color:var(--text-dim); margin-bottom:32px; max-width:520px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px;}
+  .contact-btn{
+    font-family:var(--mono); font-size:13px; text-decoration:none;
+    padding:11px 18px; border-radius:4px; border:1px solid var(--border);
+    color:var(--text); transition:all .15s;
+  }
+  .contact-btn.primary{background:var(--go); color:#0C1310; border-color:var(--go); font-weight:600;}
+  .contact-btn:hover{border-color:var(--go); color:var(--go);}
+  .contact-btn.primary:hover{color:#0C1310; opacity:0.9;}
+
+  footer{padding:24px 0; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    h1{font-size:32px;}
+    .log-entry{grid-template-columns:1fr;}
+    .log-when{padding-top:0;}
+    .proj-grid, .skill-groups, .cert-grid{grid-template-columns:1fr;}
+    .nav{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status-dot{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">sujoy<b>.g</b> / release-log</div>
+    <div class="nav">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#certifications">certifications</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="status-badge"><span class="status-dot"></span>OPEN FOR ASSIGNMENTS</div>
+    <h1>Sujoy G.</h1>
+    <p class="tagline">Release &amp; Transformation Manager — SAP S/4HANA programs, IT governance, and AI-augmented decisioning, built over 18+ years across Siemens, Fiserv, Wirecard, DBS, HSBC, and Capgemini.</p>
+    <div class="version-tag">v18.2026 <span>· stable · production-tested across 6 employers, 8 countries</span></div>
+    <div class="hero-meta">
+      <div>Based in <span>Munich, Germany</span></div>
+      <div>Languages <span>English (professional), German (B2)</span></div>
+      <div>Engagement <span>Remote / on-site · DACH</span></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">About</span></div>
+    <div class="about-body">
+      <p>I help enterprises bring order and speed to complex, high-stakes IT transformations — the kind where a missed release gate, a poorly sequenced cutover, or unclear governance can cost millions and derail timelines.</p>
+      <p>Most recently I led Release and Change for <strong>SHERPA X</strong>, Siemens' group-wide SAP S/4HANA transformation program — owning the release governance model, cutover sequencing, and cross-tribe coordination, and authoring the program's master release numbering standard. Before that, I ran release management for Fiserv's payments platforms out of Frankfurt and Nuremberg, and held governance and platform operations roles at Wirecard and DBS Singapore.</p>
+      <p>What I bring beyond standard release/PMO delivery is a practical instinct for automation: I built <strong>ERSA</strong> (Enterprise Release Stability Agent), a LangChain-based agentic AI tool that supports release governance decisioning — bringing faster, data-backed risk assessments into a discipline that traditionally runs on spreadsheets and manual sign-offs.</p>
+      <p>I work well in regulated, high-governance environments, communicate directly about scope and risk rather than overpromising, and I'm comfortable stepping into ambiguous programs and building structure from the ground up.</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Experience</span><span class="sec-sub">// changelog, most recent first</span></div>
+
+    <div class="log-entry">
+      <div class="log-when">2026<br>(fixed-term)</div>
+      <div>
+        <div class="log-title">Lead Release and Change</div>
+        <div class="log-org">Siemens AG · SHERPA X (SAP S/4HANA transformation)</div>
+        <div class="log-desc">Owned release and change governance for Siemens' group-wide SAP S/4HANA transformation. Directed cutover sequencing, cross-tribe release coordination, and authored the program's master release numbering standard across a multi-business-unit rollout.</div>
+        <div class="log-quals">
+          <span class="qual-chip">ITIL v3</span><span class="qual-chip">SAFe RTE</span><span class="qual-chip">PMI PMP</span><span class="qual-chip">SAP WalkMe Certified</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-when">2020–2025<br>Frankfurt / Nuremberg</div>
+      <div>
+        <div class="log-title">Team Lead Release Management</div>
+        <div class="log-org">Fiserv</div>
+        <div class="log-desc">Led release management for payments platform delivery in a regulated financial services environment. Managed deployment governance, release calendars, and cross-functional sign-off processes across distributed teams.</div>
+        <div class="log-quals">
+          <span class="qual-chip">ITIL v3</span><span class="qual-chip">PMI PMP</span><span class="qual-chip">Prosci Change Practitioner</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-when">Wirecard era</div>
+      <div>
+        <div class="log-title">Team Lead IT Platform Operations &amp; Governance</div>
+        <div class="log-org">Wirecard Acceptance Technologies</div>
+        <div class="log-desc">Ran platform operations and governance for acceptance technology systems, balancing operational stability with change throughput.</div>
+        <div class="log-quals">
+          <span class="qual-chip">ITIL v3</span><span class="qual-chip">AWS Cloud Practitioner</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-when">DBS era<br>Singapore</div>
+      <div>
+        <div class="log-title">Project Manager</div>
+        <div class="log-org">DBS Bank</div>
+        <div class="log-desc">Delivered initiatives on the consumer card platform, coordinating across technology and business stakeholders in a regulated banking environment.</div>
+        <div class="log-quals">
+          <span class="qual-chip">PMI PMP</span><span class="qual-chip">Certified Scrum Master</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-when">2007–2015<br>UK / India / Malaysia / UAE</div>
+      <div>
+        <div class="log-title">Consultant</div>
+        <div class="log-org">Capgemini · clients including HSBC, RBS</div>
+        <div class="log-desc">Delivered consulting engagements across multiple geographies — the foundation years that built global delivery and consulting-grade discipline.</div>
+        <div class="log-quals">
+          <span class="qual-chip">PMI PMP (foundational)</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Projects</span><span class="sec-sub">// selected builds</span></div>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-01 · SIEMENS AG</div>
+        <div class="proj-title">SHERPA X Release Governance</div>
+        <div class="proj-desc">Designed and ran the release governance model for one of Siemens' largest SAP transformation programs, coordinating cutover across multiple tribes. Authored the master release numbering framework adopted program-wide.</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-02 · FISERV</div>
+        <div class="proj-title">eMAXS Release</div>
+        <div class="proj-desc">Led release planning and coordination for the eMAXS release at Fiserv, aligning deployment schedules and sign-offs across cross-functional teams.</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-03 · INDEPENDENT BUILD</div>
+        <div class="proj-title">ERSA — Enterprise Release Stability Agent</div>
+        <div class="proj-desc">A LangChain-based agentic AI tool for release governance decisioning — bringing faster, data-backed risk assessment into a process traditionally run on spreadsheets and manual judgment calls.</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-04 · FISERV</div>
+        <div class="proj-title">Payments Platform Release Governance</div>
+        <div class="proj-desc">Owned end-to-end release management for payments platform deployments, managing release calendars and deployment governance across Frankfurt- and Nuremberg-based teams.</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-05 · FISERV</div>
+        <div class="proj-title">Scheme Compliance Release</div>
+        <div class="proj-desc">Held end-to-end ownership of the Scheme Compliance release at Fiserv — from planning through deployment — ensuring card scheme requirements were met on schedule.</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-id">PROJ-06 · DBS BANK, SINGAPORE</div>
+        <div class="proj-title">Apple Pay Rollout</div>
+        <div class="proj-desc">Held end-to-end ownership of the Apple Pay rollout on the consumer card platform — from planning through go-live — coordinating across technology, scheme, and business stakeholders.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Skills &amp; Knowledge</span></div>
+    <div class="skill-groups">
+
+      <div>
+        <div class="skill-group-title">ERP / SAP</div>
+        <div class="skill-list">
+          <span class="skill-pill">SAP S/4HANA cutover governance</span>
+          <span class="skill-pill">Template management</span>
+          <span class="skill-pill">SAP upgrade planning</span>
+          <span class="skill-pill">SAP BTP release coordination</span>
+          <span class="skill-pill">SAP Signavio</span>
+          <span class="skill-pill">Master release numbering</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-title">Non-ERP / DevOps</div>
+        <div class="skill-list">
+          <span class="skill-pill">Jira &amp; Confluence</span>
+          <span class="skill-pill">Jenkins / GitLab CI</span>
+          <span class="skill-pill">Azure DevOps / TFS</span>
+          <span class="skill-pill">ITIL processes</span>
+          <span class="skill-pill">Agile / SAFe (RTE)</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-title">Governance &amp; Regulatory</div>
+        <div class="skill-list">
+          <span class="skill-pill">DORA</span>
+          <span class="skill-pill">MaRisk (in progress)</span>
+          <span class="skill-pill">ZAG awareness</span>
+          <span class="skill-pill">Payments &amp; card platforms</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-title">AI, Budget &amp; Vendor</div>
+        <div class="skill-list">
+          <span class="skill-pill">LangChain / agentic workflows</span>
+          <span class="skill-pill">Budgeting &amp; cost control</span>
+          <span class="skill-pill">RFP management</span>
+          <span class="skill-pill">Vendor evaluation</span>
+          <span class="skill-pill">Cross-cultural leadership</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Certifications</span></div>
+    <div class="cert-grid">
+      <div class="cert-item">ITIL v3</div>
+      <div class="cert-item">SAFe RTE</div>
+      <div class="cert-item">PMI PMP</div>
+      <div class="cert-item">Certified Scrum Master</div>
+      <div class="cert-item">Prosci Change Practitioner</div>
+      <div class="cert-item">AWS Cloud Practitioner</div>
+      <div class="cert-item">SAP Certified – WalkMe Digital Adoption Consultant</div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-title">Let's talk about your program.</div>
+    <p class="contact-sub">Available for interim release/change management, transformation PMO leadership, and SAP program governance assignments — remote or on-site across DACH.</p>
+    <div class="contact-links">
+      <a class="contact-btn primary" href="https://linkedin.com/in/sujoy-g-transformation" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>built &amp; maintained by Sujoy G. · Munich, Germany</footer>
+
+</body>
+</html>
