@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERSA — Enterprise Release Stability Agent | Sujoy G.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151A;
+    --surface: #1A1F27;
+    --surface-2: #20262F;
+    --border: #2B323D;
+    --text: #E7EAEE;
+    --text-dim: #8A93A3;
+    --text-faint: #5B6472;
+    --go: #3FD9A0;
+    --hold: #F0A83A;
+    --risk: #E5637A;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:0.15;
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:rgba(18,21,26,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .brand{font-family:var(--mono); font-size:13px; color:var(--text-dim); letter-spacing:0.5px;}
+  .brand b{color:var(--text);}
+  .nav{display:flex; gap:22px; font-family:var(--mono); font-size:12.5px;}
+  .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .nav a:hover{color:var(--go);}
+  .nav a.active{color:var(--go);}
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--text-faint); padding-top:32px; margin-bottom:8px;}
+  .breadcrumb a{color:var(--text-dim); text-decoration:none;}
+  .breadcrumb a:hover{color:var(--go);}
+
+  .hero{padding:8px 0 48px; border-bottom:1px solid var(--border);}
+  .status-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.5px;
+    color:var(--go); background:rgba(63,217,160,0.08);
+    border:1px solid rgba(63,217,160,0.35);
+    padding:5px 12px; border-radius:3px; margin-bottom:24px;
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--go); box-shadow:0 0 8px var(--go); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:38px; line-height:1.15;
+    letter-spacing:-0.5px; margin-bottom:14px; color:#fff;
+  }
+  .tagline{font-size:17px; color:var(--text-dim); max-width:680px; margin-bottom:20px;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:24px; font-family:var(--mono); font-size:12.5px; color:var(--text-dim);}
+  .hero-meta div span{color:var(--text);}
+
+  section{padding:48px 0; border-bottom:1px solid var(--border);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:28px;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--go);}
+  .sec-title{font-size:20px; font-weight:700; color:#fff;}
+
+  .body-copy{color:var(--text-dim); font-size:15.5px; max-width:720px;}
+  .body-copy p{margin-bottom:16px;}
+  .body-copy strong{color:var(--text); font-weight:600;}
+  .body-copy ul{margin:0 0 16px 20px;}
+  .body-copy li{margin-bottom:8px;}
+
+  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .stack-group-title{font-family:var(--mono); font-size:12px; color:var(--hold); letter-spacing:0.5px; margin-bottom:12px;}
+  .stack-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .stack-pill{
+    font-size:13px; color:var(--text-dim); background:var(--surface);
+    border:1px solid var(--border); padding:5px 12px; border-radius:4px;
+  }
+
+  .note-box{
+    background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--hold);
+    border-radius:4px; padding:16px 20px; font-size:14px; color:var(--text-dim); max-width:720px;
+  }
+  .note-box strong{color:var(--text);}
+
+  .contact{padding:56px 0 72px; border-bottom:none;}
+  .contact-title{font-size:24px; font-weight:700; color:#fff; margin-bottom:12px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px;}
+  .contact-btn{
+    font-family:var(--mono); font-size:13px; text-decoration:none;
+    padding:11px 18px; border-radius:4px; border:1px solid var(--border);
+    color:var(--text); transition:all .15s;
+  }
+  .contact-btn.primary{background:var(--go); color:#0C1310; border-color:var(--go); font-weight:600;}
+  .contact-btn:hover{border-color:var(--go); color:var(--go);}
+  .contact-btn.primary:hover{color:#0C1310; opacity:0.9;}
+
+  footer{padding:24px 0; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    h1{font-size:28px;}
+    .stack-grid{grid-template-columns:1fr;}
+    .nav{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status-dot{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">sujoy<b>.g</b> / release-log</div>
+    <div class="nav">
+      <a href="index.html#about">about</a>
+      <a href="index.html#experience">experience</a>
+      <a href="index.html#projects">projects</a>
+      <a href="index.html#skills">skills</a>
+      <a href="index.html#certifications">certifications</a>
+      <a href="articles.html">articles</a>
+      <a href="index.html#contact">contact</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← back to release-log</a></div>
+
+  <section class="hero">
+    <div class="status-badge"><span class="status-dot"></span>PROJ-03 · INDEPENDENT BUILD</div>
+    <h1>ERSA — Enterprise Release Stability Agent</h1>
+    <p class="tagline">A LangChain-based agentic AI tool that supports release governance decisioning — bringing faster, data-backed risk assessment into a discipline traditionally run on spreadsheets and manual sign-offs.</p>
+    <div class="hero-meta">
+      <div>Built by <span>Sujoy G.</span></div>
+      <div>Framework <span>LangChain</span></div>
+      <div>Status <span>Primary AI proof point in job applications</span></div>
+    </div>
+  </section>
+
+  <section id="overview">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Why I built it</span></div>
+    <div class="body-copy">
+      <p>Release governance — deciding whether a change is safe to deploy, what the blast radius looks like, and who needs to sign off — is a discipline that, even in mature organizations, often still runs on spreadsheets, tribal knowledge, and manual judgment calls under time pressure.</p>
+      <p>ERSA was my attempt to bring some of that decisioning onto a more structured, data-backed footing — an agentic tool that can reason over release-related data and support the kind of risk assessment that release managers do today largely by memory and gut feel.</p>
+    </div>
+  </section>
+
+  <section id="what-it-does">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">What it does</span></div>
+    <div class="body-copy">
+      <ul>
+        <li>Consolidates release-relevant data from multiple sources rather than relying on a single system of record — including Jira, alongside other tooling such as ServiceNow.</li>
+        <li>Applies agentic reasoning to surface release risk signals that would otherwise need to be pieced together manually across tools.</li>
+        <li>Aims to support — not replace — the judgment calls a release manager makes at go/no-go gates, by giving them a faster, more consistent starting point.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Stack &amp; approach</span></div>
+    <div class="stack-grid">
+      <div>
+        <div class="stack-group-title">Core</div>
+        <div class="stack-list">
+          <span class="stack-pill">LangChain</span>
+          <span class="stack-pill">Agentic workflows</span>
+        </div>
+      </div>
+      <div>
+        <div class="stack-group-title">Data sources</div>
+        <div class="stack-list">
+          <span class="stack-pill">Jira</span>
+          <span class="stack-pill">ServiceNow</span>
+          <span class="stack-pill">Multi-source consolidation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="context">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Background</span></div>
+    <div class="note-box">
+      I've also written about the thinking behind ERSA and enterprise release risk more broadly — see the <strong>Articles</strong> page for the full write-up.
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-title">Interested in how this applies to your program?</div>
+    <div class="contact-links">
+      <a class="contact-btn primary" href="https://linkedin.com/in/sujoy-g-transformation" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="contact-btn" href="articles.html">Read the articles →</a>
+      <a class="contact-btn" href="index.html">Back to home →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>built &amp; maintained by Sujoy G. · Munich, Germany</footer>
+
+</body>
+</html>

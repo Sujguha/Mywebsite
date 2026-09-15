@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles | Sujoy G.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151A;
+    --surface: #1A1F27;
+    --surface-2: #20262F;
+    --border: #2B323D;
+    --text: #E7EAEE;
+    --text-dim: #8A93A3;
+    --text-faint: #5B6472;
+    --go: #3FD9A0;
+    --hold: #F0A83A;
+    --risk: #E5637A;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:0.15;
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:rgba(18,21,26,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .brand{font-family:var(--mono); font-size:13px; color:var(--text-dim); letter-spacing:0.5px;}
+  .brand b{color:var(--text);}
+  .nav{display:flex; gap:22px; font-family:var(--mono); font-size:12.5px;}
+  .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .nav a:hover{color:var(--go);}
+  .nav a.active{color:var(--go);}
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--text-faint); padding-top:32px; margin-bottom:8px;}
+  .breadcrumb a{color:var(--text-dim); text-decoration:none;}
+  .breadcrumb a:hover{color:var(--go);}
+
+  .hero{padding:8px 0 40px; border-bottom:1px solid var(--border);}
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:38px; line-height:1.15;
+    letter-spacing:-0.5px; margin-bottom:14px; color:#fff;
+  }
+  .tagline{font-size:17px; color:var(--text-dim); max-width:680px;}
+
+  section{padding:48px 0; border-bottom:1px solid var(--border);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:28px;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--go);}
+  .sec-title{font-size:20px; font-weight:700; color:#fff;}
+  .sec-sub{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-left:auto;}
+
+  .article-list{display:flex; flex-direction:column; gap:16px;}
+  .article-card{
+    display:block; background:var(--surface); border:1px solid var(--border); border-radius:6px;
+    padding:20px 22px; text-decoration:none; transition:border-color .15s, transform .15s;
+  }
+  .article-card:hover{border-color:var(--go); transform:translateY(-2px);}
+  .article-card.placeholder{cursor:default;}
+  .article-card.placeholder:hover{border-color:var(--border); transform:none;}
+  .article-tag{
+    display:inline-block; font-family:var(--mono); font-size:10.5px; letter-spacing:0.5px;
+    padding:2px 7px; border-radius:3px; margin-bottom:10px;
+    color:var(--go); background:rgba(63,217,160,0.1); border:1px solid rgba(63,217,160,0.3);
+  }
+  .article-tag.hold{color:var(--hold); background:rgba(240,168,58,0.1); border:1px solid rgba(240,168,58,0.3);}
+  .article-title{font-size:16.5px; font-weight:600; color:#fff; margin-bottom:8px;}
+  .article-desc{font-size:14px; color:var(--text-dim); margin-bottom:10px;}
+  .article-meta{font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+  .article-meta .go{color:var(--go);}
+
+  footer{padding:24px 0; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    h1{font-size:28px;}
+    .nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">sujoy<b>.g</b> / release-log</div>
+    <div class="nav">
+      <a href="index.html#about">about</a>
+      <a href="index.html#experience">experience</a>
+      <a href="index.html#projects">projects</a>
+      <a href="index.html#skills">skills</a>
+      <a href="index.html#certifications">certifications</a>
+      <a href="articles.html" class="active">articles</a>
+      <a href="index.html#contact">contact</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← back to release-log</a></div>
+
+  <section class="hero">
+    <h1>Articles</h1>
+    <p class="tagline">Practitioner write-ups on release governance, SAP transformation, and AI-augmented decisioning — grounded in what's actually been built and run, not vendor hype.</p>
+  </section>
+
+  <section id="published">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Published</span><span class="sec-sub">// LinkedIn Pulse</span></div>
+    <div class="article-list">
+
+      <!-- TODO: replace href="#" below with the real LinkedIn Pulse URL for the ERSA / release risk article -->
+      <a class="article-card" href="#" target="_blank" rel="noopener">
+        <div class="article-tag">LINKEDIN PULSE</div>
+        <div class="article-title">Enterprise Release Risk — and Why I Built ERSA</div>
+        <div class="article-desc">On why release governance still runs on spreadsheets and manual judgment calls, and how an agentic tool like ERSA can bring faster, data-backed risk assessment into that process.</div>
+        <div class="article-meta"><span class="go">→</span> read on LinkedIn</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="in-progress">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">AI Implementation Series</span><span class="sec-sub">// GitHub / LinkedIn</span></div>
+    <div class="article-list">
+
+      <div class="article-card placeholder">
+        <div class="article-tag hold">IN PROGRESS</div>
+        <div class="article-title">AI Implementation Planning — Section 1: Initial Planning</div>
+        <div class="article-desc">A practitioner-facing series on AI implementation planning for enterprise and mid-size organizations — plain-spoken, free of vendor hype, with honest failure-mode analysis included by design.</div>
+        <div class="article-meta">link added once published</div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>built &amp; maintained by Sujoy G. · Munich, Germany</footer>
+
+</body>
+</html>
