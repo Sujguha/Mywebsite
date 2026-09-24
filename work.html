@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Work | Sujoy G.</title>
+<meta name="description" content="Everything Sujoy Guha has built and published on GitHub, synced live from github.com/Sujguha.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151A;
+    --surface: #1A1F27;
+    --surface-2: #20262F;
+    --border: #2B323D;
+    --text: #E7EAEE;
+    --text-dim: #8A93A3;
+    --text-faint: #5B6472;
+    --go: #3FD9A0;
+    --hold: #F0A83A;
+    --risk: #E5637A;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:0.15;
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:rgba(18,21,26,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .brand{font-family:var(--mono); font-size:13px; color:var(--text-dim); letter-spacing:0.5px;}
+  .brand b{color:var(--text);}
+  .nav{display:flex; gap:22px; font-family:var(--mono); font-size:12.5px;}
+  .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .nav a:hover{color:var(--go);}
+  .nav a.active{color:var(--go);}
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--text-faint); padding-top:32px; margin-bottom:8px;}
+  .breadcrumb a{color:var(--text-dim); text-decoration:none;}
+  .breadcrumb a:hover{color:var(--go);}
+
+  .hero{padding:8px 0 40px; border-bottom:1px solid var(--border);}
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:38px; line-height:1.15;
+    letter-spacing:-0.5px; margin-bottom:14px; color:#fff;
+  }
+  .tagline{font-size:17px; color:var(--text-dim); max-width:680px;}
+
+  section{padding:48px 0; border-bottom:1px solid var(--border);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:28px;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--go);}
+  .sec-title{font-size:20px; font-weight:700; color:#fff;}
+  .sec-sub{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-left:auto;}
+
+
+  .sync{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
+    margin-top:22px; font-family:var(--mono); font-size:12px; color:var(--text-dim);
+  }
+  .sync .dot{width:8px; height:8px; border-radius:50%; background:var(--text-faint); display:inline-block; margin-right:8px; vertical-align:1px;}
+  .sync.ok .dot{background:var(--go); box-shadow:0 0 0 4px rgba(63,217,160,0.15);}
+  .sync.stale .dot{background:var(--hold);}
+  .sync a{color:var(--text-dim);}
+  .sync a:hover{color:var(--go);}
+
+  .log{list-style:none; border-left:1px solid var(--border); margin-left:6px;}
+  .entry{position:relative; padding:0 0 40px 28px;}
+  .entry:last-child{padding-bottom:4px;}
+  .entry::before{
+    content:""; position:absolute; left:-5px; top:6px; width:9px; height:9px; border-radius:50%;
+    background:var(--bg); border:1.5px solid var(--text-faint);
+  }
+  .entry.live::before{border-color:var(--go); background:var(--go);}
+  .entry.wip::before{border-color:var(--hold);}
+  .body{min-width:0;}
+  .state{
+    display:inline-block; font-family:var(--mono); font-size:11px;
+    padding:1px 7px; border-radius:3px; margin-bottom:8px;
+    color:var(--text-dim); border:1px solid var(--border);
+  }
+  .state.live{color:var(--go); background:rgba(63,217,160,0.08); border-color:rgba(63,217,160,0.3);}
+  .state.wip{color:var(--hold); background:rgba(240,168,58,0.08); border-color:rgba(240,168,58,0.3);}
+  .entry h2{font-size:19px; font-weight:700; color:#fff; line-height:1.3; margin-bottom:2px;}
+  .slug{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-bottom:10px;}
+  .desc{font-size:14.5px; color:var(--text-dim); max-width:640px; margin-bottom:12px;}
+  .stack{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .stack span{font-family:var(--mono); font-size:11.5px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:2px 8px;}
+  .links{display:flex; flex-wrap:wrap; gap:8px;}
+  .links a{
+    font-family:var(--mono); font-size:12px; text-decoration:none; color:var(--text);
+    border:1px solid var(--border); background:var(--surface); border-radius:4px; padding:5px 11px;
+    transition:border-color .15s, color .15s;
+  }
+  .links a:hover, .links a:focus-visible{border-color:var(--go); color:var(--go);}
+  .links a.primary{border-color:rgba(63,217,160,0.45); color:var(--go);}
+  a:focus-visible{outline:2px solid var(--go); outline-offset:2px;}
+
+  .note{font-size:13.5px; color:var(--text-faint); max-width:640px;}
+  .note a{color:var(--text-dim);}
+
+  footer{padding:24px 0; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    h1{font-size:28px;}
+    .nav{display:none;}
+    .entry{padding-left:22px;}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">Sujoy Guha</div>
+    <div class="nav">
+      <a href="index.html#about">about</a>
+      <a href="index.html#experience">experience</a>
+      <a href="index.html#projects">projects</a>
+      <a href="work.html" class="active">github</a>
+      <a href="index.html#skills">skills</a>
+      <a href="index.html#certifications">certifications</a>
+      <a href="articles.html">articles</a>
+      <a href="index.html#contact">contact</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← back to home</a></div>
+
+  <section class="hero">
+    <h1>GitHub work</h1>
+    <p class="tagline">Tools, dashboards and write-ups I've built outside the day job, mostly to learn data pipelines, agentic AI and AI-assisted coding by shipping something real. Newest activity first.</p>
+    <div class="sync" id="sync" role="status" aria-live="polite">
+      <span><i class="dot"></i><span id="sync-text">Checking GitHub for updates…</span></span>
+      <a href="https://github.com/Sujguha" target="_blank" rel="noopener">github.com/Sujguha</a>
+    </div>
+  </section>
+
+  <section id="log" aria-label="Projects">
+    <ol class="log" id="log-list"></ol>
+    <noscript><p class="note">Turn on JavaScript to see the project list, or browse everything at <a href="https://github.com/Sujguha">github.com/Sujguha</a>.</p></noscript>
+  </section>
+
+  <section style="border-bottom:none;">
+    <p class="note">This page reads my public repositories straight from GitHub each time it loads, so new projects show up here without a site update. Forks and empty repositories are left out.</p>
+  </section>
+
+</div>
+
+<footer>built &amp; maintained by Sujoy G. · Munich, Germany</footer>
+
+<script>
+(function(){
+  var USER = "Sujguha";
+  var HIDE = ["Mywebsite"];          // repos never shown here
+
+  // Hand-written details for known repos. Anything not listed here still
+  // appears automatically, using its GitHub description.
+  var CURATED = {
+    "job-market": {
+      title: "Job Radar",
+      desc: "A daily-refreshed dashboard of demand for Program, Release, PMO, Delivery, Change, Agile, Product and Quality roles across Germany, Austria, Switzerland and the Netherlands. A Python job pulls from the Adzuna Jobs API, aggregates and classifies postings, and a GitHub Actions workflow runs the tests and commits fresh data every day.",
+      stack: ["Python", "JavaScript", "Adzuna API", "GitHub Actions", "pytest", "Netlify"],
+      live: "https://eu-job-radar.netlify.app/",
+      state: "live", pushed: "2026-09-23T10:41:16Z"
+    },
+    "Thedial": {
+      title: "The Dial — India",
+      desc: "An installable web radio player for live Indian FM and public radio, styled like a vintage analog tuner. It pulls the station list live from the open Radio Browser directory, falls back across six servers if one is down, plays MP3, AAC and HLS streams, and can be added to an iOS or Android home screen.",
+      stack: ["HTML/CSS/JS", "hls.js", "Radio Browser API", "PWA"],
+      state: "repo", pushed: "2026-09-23T13:51:43Z"
+    },
+    "Chartwright": {
+      title: "Chartwright",
+      desc: "Drop a spreadsheet, get a dashboard. A web app that turns uploaded Excel and data files into dashboards you can download or send by email. Code is on its way to this repository.",
+      stack: ["Web app", "Excel import", "Dashboards"],
+      state: "wip", pushed: "2026-09-23T09:37:42Z"
+    },
+    "ersa-api": {
+      title: "ERSA API",
+      desc: "The integration layer for ERSA, my Enterprise Release Stability Agent: a FastAPI service that receives ServiceNow Change Requests and returns a risk score and recommendation, deployable to Render from a single config file. The endpoint and contract are in place; the LangChain assessment pipeline is being wired in behind it.",
+      stack: ["Python", "FastAPI", "ServiceNow", "Render"],
+      read: "ersa.html", readLabel: "About ERSA",
+      state: "wip", pushed: "2026-09-04T09:06:38Z"
+    },
+    "Learning": {
+      title: "What AI agents in SAP actually do",
+      desc: "A plain-language explainer on AI agents in SAP: how an agent differs from a chatbot or copilot, the five things an agent does, where Joule fits, and two worked scenarios in SuccessFactors and S/4HANA with Ariba. Includes a process-flow diagram.",
+      stack: ["SAP", "Joule", "Agentic AI", "Markdown"],
+      read: "https://github.com/Sujguha/Learning/blob/main/understanding-ai-agents-in-sap.md", readLabel: "Read the write-up",
+      state: "article", pushed: "2026-08-24T13:19:40Z"
+    }
+  };
+
+  var STATE_LABEL = { live: "live", wip: "in progress", article: "write-up", repo: "repository" };
+
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+
+  function render(items){
+    items.sort(function(a,b){ return new Date(b.pushed) - new Date(a.pushed); });
+    var html = items.map(function(p){
+      var links = [];
+      if (p.live) links.push('<a class="primary" href="'+esc(p.live)+'" target="_blank" rel="noopener">Open live site</a>');
+      if (p.read) links.push('<a'+(p.live?'':' class="primary"')+' href="'+esc(p.read)+'"'+(/^https?:/.test(p.read)?' target="_blank" rel="noopener"':'')+'>'+esc(p.readLabel || "Read more")+'</a>');
+      links.push('<a href="'+esc(p.url)+'" target="_blank" rel="noopener">View code</a>');
+      var stack = (p.stack||[]).map(function(s){ return "<span>"+esc(s)+"</span>"; }).join("");
+      return '<li class="entry '+esc(p.state)+'">' +
+        '<div class="body">' +
+          '<span class="state '+esc(p.state)+'">'+esc(STATE_LABEL[p.state] || p.state)+'</span>' +
+          '<h2>'+esc(p.title)+'</h2>' +
+          '<div class="slug">'+esc(USER+"/"+p.name)+'</div>' +
+          '<p class="desc">'+esc(p.desc)+'</p>' +
+          (stack ? '<div class="stack">'+stack+'</div>' : '') +
+          '<div class="links">'+links.join("")+'</div>' +
+        '</div></li>';
+    }).join("");
+    document.getElementById("log-list").innerHTML = html;
+  }
+
+  function fromCurated(){
+    return Object.keys(CURATED).map(function(name){
+      var c = CURATED[name];
+      return Object.assign({ name: name, url: "https://github.com/"+USER+"/"+name }, c);
+    });
+  }
+
+  function setSync(cls, text){
+    var el = document.getElementById("sync");
+    el.className = "sync " + cls;
+    document.getElementById("sync-text").textContent = text;
+  }
+
+  // 1) Show the saved list straight away
+  render(fromCurated());
+
+  // 2) Refresh from GitHub
+  fetch("https://api.github.com/users/"+USER+"/repos?per_page=100&sort=pushed", { headers: { "Accept": "application/vnd.github+json" } })
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(repos){
+      var items = [];
+      repos.forEach(function(r){
+        if (r.fork || r.archived || HIDE.indexOf(r.name) !== -1) return;
+        var c = CURATED[r.name];
+        if (!c && r.size === 0) return;           // empty, undocumented repo
+        var base = c || {
+          title: r.name.replace(/[-_]+/g, " "),
+          desc: r.description || "New project. Details coming soon.",
+          stack: r.language ? [r.language] : [],
+          state: "repo"
+        };
+        var item = Object.assign({ name: r.name, url: r.html_url }, base);
+        item.pushed = r.pushed_at || base.pushed;
+        if (!item.live && r.homepage) item.live = r.homepage;
+        if (item.live && item.state === "repo") item.state = "live";
+        if (!c && r.topics && r.topics.length) item.stack = item.stack.concat(r.topics.slice(0,4));
+        items.push(item);
+      });
+      render(items);
+      setSync("ok", "Synced with GitHub just now · " + items.length + " projects");
+    })
+    .catch(function(){
+      setSync("stale", "Showing the saved list. GitHub didn't respond, so recent changes may be missing.");
+    });
+})();
+</script>
+
+</body>
+</html>

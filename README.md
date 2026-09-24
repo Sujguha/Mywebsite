@@ -10,6 +10,7 @@ A single-page portfolio built with plain HTML/CSS (no build step, no framework),
 |-----------------|------------------------------------------------------------------------------|
 | `index.html`    | Home page — About, Experience, Projects, Skills, Certifications, Contact    |
 | `ersa.html`     | Subpage on ERSA (Enterprise Release Stability Agent), a LangChain-based agentic tool for release governance decisioning |
+| `work.html`     | GitHub work — every public project, pulled live from the GitHub API on each visit (forks, empty repos and this site's repo are hidden) |
 | `articles.html` | Subpage listing published articles (LinkedIn Pulse) and work in progress   |
 | `profile.png`   | Profile photo used in the hero section of `index.html`                      |
 
@@ -25,6 +26,12 @@ A single-page portfolio built with plain HTML/CSS (no build step, no framework),
 - **Experience / Projects / Skills / Certifications**: edit the relevant section directly in `index.html`.
 - **ERSA details**: edit `ersa.html`.
 - **Articles**: edit `articles.html`. The LinkedIn Pulse article card has a placeholder `href="#"` — replace with the live article URL once available. The AI Implementation Series entry is marked "in progress" until published.
+
+## Keeping the GitHub page current
+
+`work.html` fetches `api.github.com/users/Sujguha/repos` in the visitor's browser, so a new public repo appears automatically with its GitHub description, language, topics and homepage link. To give a project a proper title, write-up, stack tags or a live-site button, add an entry to the `CURATED` object in the page's script. If GitHub's API is unreachable, the page falls back to the curated list.
+
+To hide a repo, add its name to `HIDE`. Setting a repo's **Website** field on GitHub makes an "Open live site" button appear.
 
 ## Deploying
 
