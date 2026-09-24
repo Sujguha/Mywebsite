@@ -157,7 +157,7 @@
 
   <section class="hero">
     <h1>GitHub work</h1>
-    <p class="tagline">Tools, dashboards and write-ups I've built outside the day job, mostly to learn data pipelines, agentic AI and AI-assisted coding by shipping something real. Newest activity first.</p>
+    <p class="tagline">Tools and dashboards I've built outside the day job, mostly to learn data pipelines, agentic AI and AI-assisted coding by shipping something real. Newest activity first.</p>
     <div class="sync" id="sync" role="status" aria-live="polite">
       <span><i class="dot"></i><span id="sync-text">Checking GitHub for updates…</span></span>
       <a href="https://github.com/Sujguha" target="_blank" rel="noopener">github.com/Sujguha</a>
@@ -170,7 +170,7 @@
   </section>
 
   <section style="border-bottom:none;">
-    <p class="note">This page reads my public repositories straight from GitHub each time it loads, so new projects show up here without a site update. Forks and empty repositories are left out.</p>
+    <p class="note">This page reads my public repositories straight from GitHub each time it loads, so new projects show up here without a site update. Forks and empty repositories are left out. Write-ups live on the <a href="articles.html">articles</a> page.</p>
   </section>
 
 </div>
@@ -180,7 +180,7 @@
 <script>
 (function(){
   var USER = "Sujguha";
-  var HIDE = ["Mywebsite"];          // repos never shown here
+  var HIDE = ["Mywebsite", "Learning"]; // repos never shown here (Learning is on articles.html)
 
   // Hand-written details for known repos. Anything not listed here still
   // appears automatically, using its GitHub description.
@@ -210,13 +210,6 @@
       stack: ["Python", "FastAPI", "ServiceNow", "Render"],
       read: "ersa.html", readLabel: "About ERSA",
       state: "wip", pushed: "2026-09-04T09:06:38Z"
-    },
-    "Learning": {
-      title: "What AI agents in SAP actually do",
-      desc: "A plain-language explainer on AI agents in SAP: how an agent differs from a chatbot or copilot, the five things an agent does, where Joule fits, and two worked scenarios in SuccessFactors and S/4HANA with Ariba. Includes a process-flow diagram.",
-      stack: ["SAP", "Joule", "Agentic AI", "Markdown"],
-      read: "https://github.com/Sujguha/Learning/blob/main/understanding-ai-agents-in-sap.md", readLabel: "Read the write-up",
-      state: "article", pushed: "2026-08-24T13:19:40Z"
     }
   };
 
@@ -231,7 +224,6 @@
       var links = [];
       if (p.live) links.push('<a class="primary" href="'+esc(p.live)+'" target="_blank" rel="noopener">Open live site</a>');
       if (p.read) links.push('<a'+(p.live?'':' class="primary"')+' href="'+esc(p.read)+'"'+(/^https?:/.test(p.read)?' target="_blank" rel="noopener"':'')+'>'+esc(p.readLabel || "Read more")+'</a>');
-      links.push('<a href="'+esc(p.url)+'" target="_blank" rel="noopener">View code</a>');
       var stack = (p.stack||[]).map(function(s){ return "<span>"+esc(s)+"</span>"; }).join("");
       return '<li class="entry '+esc(p.state)+'">' +
         '<div class="body">' +
@@ -240,7 +232,7 @@
           '<div class="slug">'+esc(USER+"/"+p.name)+'</div>' +
           '<p class="desc">'+esc(p.desc)+'</p>' +
           (stack ? '<div class="stack">'+stack+'</div>' : '') +
-          '<div class="links">'+links.join("")+'</div>' +
+          (links.length ? '<div class="links">'+links.join("")+'</div>' : '') +
         '</div></li>';
     }).join("");
     document.getElementById("log-list").innerHTML = html;
