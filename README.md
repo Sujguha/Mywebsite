@@ -1,38 +1,92 @@
-# Sujoy Guha — Portfolio Site
+# Chartwright
 
-Live site: https://sujguha.github.io/Mywebsite/
+**Version 1.2.0** · [Changelog](CHANGELOG.md)
 
-A single-page portfolio built with plain HTML/CSS (no build step, no framework), styled as a dark "release changelog" — sections read like version history entries, projects read like changelog cards.
+**Drop a spreadsheet. Get a dashboard.**
 
-## Pages
+Chartwright turns an Excel, CSV or JSON file into an interactive dashboard in seconds. It reads your columns, works out which are dates, numbers and categories, and builds key figures and charts automatically. You can then filter, add your own charts, and share the result as a PDF, a data file or an email.
 
-| File            | Description                                                                 |
-|-----------------|------------------------------------------------------------------------------|
-| `index.html`    | Home page — About, Experience, Projects, Skills, Certifications, Contact    |
-| `ersa.html`     | Subpage on ERSA (Enterprise Release Stability Agent), a LangChain-based agentic tool for release governance decisioning |
-| `work.html`     | GitHub work — every public project, pulled live from the GitHub API on each visit (forks, empty repos and this site's repo are hidden) |
-| `articles.html` | Subpage listing published articles (LinkedIn Pulse) and work in progress   |
-| `profile.png`   | Profile photo used in the hero section of `index.html`                      |
+Everything runs in the browser. Your file is never uploaded to a server.
 
-## Structure & theme
+## Features
 
-- All styling is inline `<style>` in each page's `<head>` — no external stylesheet, no build tooling. Copy the `:root` variables and section styles when adding a new page so it matches the existing dark theme.
-- Color tokens: `--bg`, `--surface`, `--border`, `--text`, `--text-dim`, `--go` (accent green), `--hold` (amber, used for "in progress" states).
-- Fonts: IBM Plex Sans (body), IBM Plex Mono (labels, nav, meta text) — loaded from Google Fonts.
-- Navigation lives in `.topbar .nav` on every page and links to `index.html#section` anchors plus the two subpages.
+- **Automatic dashboards**: key-figure tiles, a trend line over time, and breakdown charts chosen from your column types.
+- **Your own title and key figures**: rename the dashboard and choose what each key-figure tile shows.
+- **Filters**: narrow the whole dashboard by any category column.
+- **Chart builder**: bar, horizontal bar, line and doughnut charts, showing a count, total, average, minimum or maximum.
+- **Data table**: searchable and sortable.
+- **Downloads**: a PDF report (key figures, charts and data), an HTML report, and the filtered data as Excel or CSV.
+- **Email**: opens a new email in your mail app with the recipients and subject filled in, and copies a formatted version of the dashboard (with charts) to paste into it.
+- **German formats**: understands numbers such as `1.234,5` and dates such as `23.07.2026`.
+- **Light and dark mode**: follows your system setting.
+- **Guide (inside Claude only)**: an AI assistant that answers questions about the data with exact figures, explains how to use the app, and can apply filters, add or remove charts, and open the Download or Email panel on request.
 
-## Updating content
+## Supported file formats
 
-- **Experience / Projects / Skills / Certifications**: edit the relevant section directly in `index.html`.
-- **ERSA details**: edit `ersa.html`.
-- **Articles**: edit `articles.html`. The LinkedIn Pulse article card has a placeholder `href="#"` — replace with the live article URL once available. The AI Implementation Series entry is marked "in progress" until published.
+| Format | Extensions | Notes |
+|---|---|---|
+| Excel | `.xlsx` `.xlsm` `.xls` `.xlsb` | All sheets are available; the first sheet with data opens by default. |
+| OpenDocument | `.ods` | LibreOffice and OpenOffice spreadsheets. |
+| Delimited text | `.csv` `.tsv` `.txt` | The separator (comma, semicolon, tab or pipe) is detected automatically. UTF-8 and Windows-1252 encodings are both supported. |
+| JSON | `.json` `.jsonl` `.ndjson` | Finds the list of records anywhere in the file (for example a Jira or ServiceNow API export) and flattens nested fields into columns. |
 
-## Keeping the GitHub page current
+Power BI files (`.pbix`) can't be read directly. Export the data from Power BI to Excel or CSV first.
 
-`work.html` fetches `api.github.com/users/Sujguha/repos` in the visitor's browser, so a new public repo appears automatically with its GitHub description, language, topics and homepage link. To give a project a proper title, write-up, stack tags or a live-site button, add an entry to the `CURATED` object in the page's script. If GitHub's API is unreachable, the page falls back to the curated list.
+### Getting the best results
 
-To hide a repo, add its name to `HIDE`. Setting a repo's **Website** field on GitHub makes an "Open live site" button appear.
+- Put one header row at the top and one record per row.
+- Keep one kind of value per column (for example, no "N/A" in a number column).
+- Remove totals and subtotal rows, since they are counted as data.
+- Avoid merged cells and cross-tab layouts (for example, months across the columns).
 
-## Deploying
+## Try it
 
-This is a GitHub Pages site served from the repo root on the default branch. Upload or commit changes directly to `main` — GitHub Pages picks them up automatically after a short build delay.
+Open the app and select **Try it with sample release data**, or upload one of the files in [`samples/`](samples/). The small samples hold the same 180 fictional release records in different formats; the large ones are for testing performance. All data is fictional:
+
+| File | What it shows |
+|---|---|
+| `release-data.csv` | Standard comma-separated file |
+| `release-data.json` | Simple JSON: a list of records with one field per column |
+| `release-data-api-style.json` | Nested JSON shaped like a Jira-style API export, to show automatic flattening |
+| `release-data.tsv` | Tab-separated file |
+| `release-data-semicolon.txt` | German-style export: semicolons, `dd.mm.yyyy` dates, umlauts, Windows-1252 encoding |
+| `release-data.xlsx`, `.xlsb`, `.ods` | Spreadsheet formats |
+| `release-data-large.xlsx` | 12,000 releases and 2,700 linked incidents across 25 columns, for load testing |
+| `finance-ledger-large.xlsx` | 15,000 general-ledger postings in 5 currencies, plus a monthly budget vs actual sheet |
+
+## Run it yourself
+
+Chartwright is a single `index.html` file with no build step.
+
+- **Locally**: download `index.html` and open it in your browser.
+- **GitHub Pages**: in this repository go to **Settings → Pages**, set **Source** to *Deploy from a branch*, choose the `main` branch and the `/ (root)` folder, and select **Save**. The site appears at `https://<your-username>.github.io/<repository-name>/` after a minute or two.
+
+An internet connection is needed on first load, because the libraries below are loaded from a CDN.
+
+## Built with
+
+- [SheetJS](https://sheetjs.com/) for reading spreadsheet files
+- [Chart.js](https://www.chartjs.org/) for charts
+- [jsPDF](https://github.com/parallax/jsPDF) and [jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable) for PDF reports
+- [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) from Google Fonts
+
+## Limitations
+
+- Dashboards aren't saved between visits. Reload the file to see it again.
+- Email attachments aren't possible through a mail-app link, so attach a downloaded PDF by hand if you need one.
+- Very large files (hundreds of thousands of rows) work but can be slow, depending on your computer.
+- The guide uses the viewer's Claude account, so it only appears when Chartwright is opened inside Claude. It is hidden on GitHub Pages and other hosting.
+
+## Versioning
+
+Chartwright uses [Semantic Versioning](https://semver.org/). The current version appears on the start page, in the top bar, and in the footer of every PDF report. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release.
+
+To release a new version:
+
+1. Update `APP_VERSION` near the top of the script in `index.html` (and the `version` meta tag).
+2. Add an entry at the top of `CHANGELOG.md`.
+3. Commit, then create a GitHub release with a tag such as `v1.1.0`.
+
+## License
+
+[MIT](LICENSE)
