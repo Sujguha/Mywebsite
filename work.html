@@ -265,6 +265,13 @@
     }
   };
 
+  // GitHub stores the Website field exactly as typed, e.g. "chartwright.netlify.app".
+  // Without https:// the browser treats it as a page on this site, so add it.
+  function fullUrl(u){
+    u = String(u || "").trim();
+    return /^https?:\/\//i.test(u) ? u : "https://" + u.replace(/^\/+/, "");
+  }
+
   var STATE_LABEL = { live: "live", wip: "in progress", article: "write-up", repo: "repository" };
 
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
@@ -324,6 +331,7 @@
         var item = Object.assign({ name: r.name, url: r.html_url }, base);
         item.pushed = r.pushed_at || base.pushed;
         if (r.homepage) item.live = r.homepage;   // GitHub's Website field wins
+        if (item.live) item.live = fullUrl(item.live);
         if (item.live && item.state === "repo") item.state = "live";
         if (!c && r.topics && r.topics.length) item.stack = item.stack.concat(r.topics.slice(0,4));
         items.push(item);
