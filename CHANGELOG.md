@@ -3,6 +3,15 @@
 All notable changes to Chartwright are listed here. Versions follow [Semantic Versioning](https://semver.org/):
 **MAJOR** for changes that break how people use the app, **MINOR** for new features, **PATCH** for fixes.
 
+## [1.2.1] - 2026-09-25
+
+### Changed
+- A visible "Rename" button next to the dashboard name makes renaming easy to find.
+- Key-figure tiles show their ✎ pencil all the time, and clicking anywhere on a tile opens its editor.
+
+### Fixed
+- Typing straight after clicking the dashboard name no longer loses the first letters.
+
 ## [1.2.0] - 2026-09-25
 
 ### Added
