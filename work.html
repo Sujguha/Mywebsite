@@ -235,26 +235,33 @@
   // Hand-written details for known repos. Anything not listed here still
   // appears automatically, using its GitHub description.
   var CURATED = {
+    "sentoarc": {
+      title: "SENtoArc",
+      desc: "Validates and auto-fixes SCORM packages exported from SAP Enable Now so they import cleanly into WalkMe Learning Arc. Upload a package and it checks the manifest, repairs what Learning Arc would reject, and hands back a fixed SCORM 1.2 file with a report; PDFs and other non-SCORM files are wrapped into SCORM automatically. Free, Pro and Enterprise tiers: bulk and ZIP-of-ZIPs upload, CSV reports and translation-path rewrites on Pro; shared projects with admin/editor/viewer roles, an audit log and data retention on Enterprise, billed through Stripe. Files are stored in the EU.",
+      stack: ["TypeScript", "Cloudflare Workers", "Hono", "D1 / R2 / Queues", "React", "Stripe"],
+      live: "https://sentoarc.sujoy-guha2.workers.dev",
+      state: "live", pushed: "2026-10-06T15:44:38Z"
+    },
     "job-market": {
       title: "Job Radar",
-      desc: "A daily-refreshed dashboard of demand for Program, Release, PMO, Delivery, Change, Agile, Product and Quality roles across Germany, Austria, Switzerland and the Netherlands. A Python job pulls from the Adzuna Jobs API, aggregates and classifies postings, and a GitHub Actions workflow runs the tests and commits fresh data every day.",
+      desc: "A daily-refreshed dashboard of demand for Program, Release, PMO, Delivery, Change, Agile, Product and Quality roles across Germany, Austria, Switzerland and the Netherlands. A Python job pulls from the Adzuna Jobs API, aggregates and classifies postings, and a GitHub Actions workflow runs the tests and commits fresh data every day. Version 2.0 adds an ATS Checker tab that scores a CV against a job description for keyword match, entirely in the browser.",
       stack: ["Python", "JavaScript", "Adzuna API", "GitHub Actions", "pytest", "Netlify"],
       live: "https://eu-job-radar.netlify.app/",
-      state: "live", pushed: "2026-09-23T10:41:16Z"
+      state: "live", pushed: "2026-10-06T12:40:32Z"
     },
     "Thedial": {
       title: "The Dial — India",
-      desc: "An installable web radio player for live Indian FM and public radio, styled like a vintage analog tuner. It pulls the station list live from the open Radio Browser directory, falls back across six servers if one is down, plays MP3, AAC and HLS streams, and can be added to an iOS or Android home screen.",
-      stack: ["HTML/CSS/JS", "hls.js", "Radio Browser API", "PWA"],
+      desc: "An installable web radio and podcast player for India, styled like a vintage analog tuner. Live Radio pulls Indian FM and public stations from the open Radio Browser directory, falling back across six servers if one is down, and plays MP3, AAC and HLS streams. The Podcasts tab opens on popular Indian shows, searches Apple's podcast catalogue, and reads episodes straight from each show's RSS feed. Both share one player with lock-screen controls, and it can be added to an iOS or Android home screen.",
+      stack: ["HTML/CSS/JS", "hls.js", "Radio Browser API", "iTunes Search API", "PWA"],
       live: "https://thedialindia.netlify.app",
-      state: "live", pushed: "2026-09-23T13:51:43Z"
+      state: "live", pushed: "2026-09-30T19:33:15Z"
     },
     "Chartwright": {
       title: "Chartwright",
-      desc: "Drop a spreadsheet, get a dashboard. Chartwright turns an Excel, CSV or JSON file into an interactive dashboard in seconds: it works out which columns are dates, numbers and categories, then builds key figures and charts you can filter and extend. Export as PDF, HTML, Excel or CSV, or send by email. It reads German number and date formats, handles nested Jira and ServiceNow API exports, and runs entirely in the browser, so files never leave your machine.",
-      stack: ["JavaScript", "Chart.js", "SheetJS", "Excel / CSV / JSON", "Netlify"],
-      live: "https://chartwright.netlify.app",
-      state: "live", pushed: "2026-09-23T09:37:42Z"
+      desc: "Drop a spreadsheet, get a dashboard. Chartwright turns an Excel, CSV or JSON file into an interactive dashboard in seconds: it works out which columns are dates, numbers and categories, then builds key figures and charts you can filter and extend. Export as PDF, HTML, Excel or CSV, or send by email. It reads German number and date formats, handles nested Jira and ServiceNow API exports, and runs entirely in the browser, so files never leave your machine. Chartwright Pro, now on staging, adds accounts and shared team workspaces with admin, editor and viewer roles, versioned dashboards and email invitations, running on Cloudflare Workers, D1 and R2.",
+      stack: ["JavaScript", "Chart.js", "SheetJS", "Cloudflare Workers", "D1 / R2", "Excel / CSV / JSON"],
+      live: "https://chartwright.de",
+      state: "live", pushed: "2026-10-06T04:44:18Z"
     },
     "ersa-api": {
       title: "ERSA API",
