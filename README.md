@@ -10,7 +10,7 @@ A single-page portfolio built with plain HTML/CSS (no build step, no framework),
 |-----------------|------------------------------------------------------------------------------|
 | `index.html`    | Home page — About, Experience, Projects, Skills, Certifications, Contact    |
 | `ersa.html`     | Subpage on ERSA (Enterprise Release Stability Agent), a LangChain-based agentic tool for release governance decisioning |
-| `work.html`     | GitHub work — every public project, pulled live from the GitHub API on each visit (forks, empty repos and this site's repo are hidden) |
+| `work.html`     | Tools — every public project, pulled live from the GitHub API on each visit (forks, empty repos and this site's repo are hidden) |
 | `articles.html` | Subpage listing published articles (LinkedIn Pulse) and work in progress   |
 | `profile.png`   | Profile photo used in the hero section of `index.html`                      |
 
