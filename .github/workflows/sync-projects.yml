@@ -1,0 +1,41 @@
+name: Sync projects
+
+# Keeps data/projects.json in step with the public repos on github.com/Sujguha,
+# so a new repo shows up on the Tools page with a summary from its README.
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours
+  workflow_dispatch:         # "Run workflow" button on the Actions tab
+  repository_dispatch:
+    types: [repo-added]      # optional: other repos can ping this to sync now
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-projects
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Snapshot public repos
+        run: node scripts/sync-projects.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit if anything changed
+        run: |
+          if git diff --quiet -- data/projects.json && git ls-files --error-unmatch data/projects.json >/dev/null 2>&1; then
+            echo "Nothing new."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/projects.json
+          git commit -m "Sync projects from GitHub"
+          git push

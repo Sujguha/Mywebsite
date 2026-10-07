@@ -304,11 +304,42 @@
     document.getElementById("log-list").innerHTML = html;
   }
 
+  // data/projects.json is written by the "Sync projects" GitHub Action
+  // (scripts/sync-projects.mjs): every public repo plus a summary of its
+  // README. Repos without a GitHub description use that summary.
+  var SNAP = {};
+
+  // r is a repo from GitHub's API or an entry from data/projects.json.
+  function toItem(r){
+    var c = CURATED[r.name], s = SNAP[r.name] || {};
+    var base = c || {
+      title: r.name.replace(/[-_]+/g, " "),
+      desc: r.description || s.summary || "New project. Details coming soon.",
+      stack: r.language ? [r.language] : [],
+      state: "repo"
+    };
+    var item = Object.assign({ name: r.name, url: r.html_url || r.url }, base);
+    item.pushed = r.pushed_at || base.pushed || r.created_at;
+    if (r.homepage) item.live = r.homepage;   // GitHub's Website field wins
+    if (item.live) item.live = fullUrl(item.live);
+    if (item.live && item.state === "repo") item.state = "live";
+    if (!c && r.topics && r.topics.length) item.stack = item.stack.concat(r.topics.slice(0,4));
+    return item;
+  }
+
   function fromCurated(){
     return Object.keys(CURATED).map(function(name){
       var c = CURATED[name];
       return Object.assign({ name: name, url: "https://github.com/"+USER+"/"+name }, c);
     });
+  }
+
+  function fromSnapshot(projects){
+    var items = projects.filter(function(r){ return HIDE.indexOf(r.name) === -1; }).map(toItem);
+    Object.keys(CURATED).forEach(function(name){   // curated repos missing from the snapshot
+      if (!SNAP[name]) items.push(Object.assign({ name: name, url: "https://github.com/"+USER+"/"+name }, CURATED[name]));
+    });
+    return items;
   }
 
   function setSync(cls, text){
@@ -320,28 +351,24 @@
   // 1) Show the saved list straight away
   render(fromCurated());
 
-  // 2) Refresh from GitHub
-  fetch("https://api.github.com/users/"+USER+"/repos?per_page=100&sort=pushed", { headers: { "Accept": "application/vnd.github+json" } })
+  // 2) Load the snapshot, then refresh from GitHub
+  fetch("data/projects.json", { cache: "no-cache" })
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      (data.projects || []).forEach(function(p){ SNAP[p.name] = p; });
+      render(fromSnapshot(data.projects || []));
+    })
+    .catch(function(){ /* no snapshot yet: keep the curated list */ })
+    .then(function(){
+      return fetch("https://api.github.com/users/"+USER+"/repos?per_page=100&sort=pushed", { headers: { "Accept": "application/vnd.github+json" } });
+    })
     .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function(repos){
       var items = [];
       repos.forEach(function(r){
         if (r.fork || r.archived || HIDE.indexOf(r.name) !== -1) return;
-        var c = CURATED[r.name];
-        if (!c && r.size === 0) return;           // empty, undocumented repo
-        var base = c || {
-          title: r.name.replace(/[-_]+/g, " "),
-          desc: r.description || "New project. Details coming soon.",
-          stack: r.language ? [r.language] : [],
-          state: "repo"
-        };
-        var item = Object.assign({ name: r.name, url: r.html_url }, base);
-        item.pushed = r.pushed_at || base.pushed;
-        if (r.homepage) item.live = r.homepage;   // GitHub's Website field wins
-        if (item.live) item.live = fullUrl(item.live);
-        if (item.live && item.state === "repo") item.state = "live";
-        if (!c && r.topics && r.topics.length) item.stack = item.stack.concat(r.topics.slice(0,4));
-        items.push(item);
+        if (!CURATED[r.name] && r.size === 0) return;   // empty, undocumented repo
+        items.push(toItem(r));
       });
       render(items);
       setSync("ok", "Synced with GitHub just now · " + items.length + " projects");
