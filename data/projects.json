@@ -1,0 +1,75 @@
+{
+  "user": "Sujguha",
+  "projects": [
+    {
+      "name": "sentoarc",
+      "url": "https://github.com/Sujguha/sentoarc",
+      "description": "",
+      "summary": "Validates and auto-fixes SCORM packages exported from SAP Enable Now (SEN) so they import cleanly into WalkMe Learning Arc (SCORM 1.2 only).",
+      "language": "TypeScript",
+      "topics": [],
+      "homepage": "",
+      "created_at": "2026-10-05T07:27:51Z"
+    },
+    {
+      "name": "Chartwright",
+      "url": "https://github.com/Sujguha/Chartwright",
+      "description": "Drop a spreadsheet. Get a dashboard.",
+      "summary": "Chartwright turns an Excel, CSV or JSON file into an interactive dashboard in seconds. It reads your columns, works out which are dates, numbers and categories, and builds key figures and charts automatically. You can then filter, add your own charts, and share the result as a PDF, a data file or an email.",
+      "language": "HTML",
+      "topics": [],
+      "homepage": "https://chartwright.de",
+      "created_at": "2026-09-23T09:37:41Z"
+    },
+    {
+      "name": "Thedial",
+      "url": "https://github.com/Sujguha/Thedial",
+      "description": "Radio Channel",
+      "summary": "A minimal, installable web radio player for live Indian FM and public radio stations, styled like a vintage analog tuner.",
+      "language": "HTML",
+      "topics": [],
+      "homepage": "thedialindia.netlify.app",
+      "created_at": "2026-09-21T07:51:58Z"
+    },
+    {
+      "name": "job-market",
+      "url": "https://github.com/Sujguha/job-market",
+      "description": "",
+      "summary": "A daily-refreshed dashboard tracking demand for Program Manager, Release Manager, PMO, Project Manager, Delivery Manager, Change Manager, Agile Coach, Scrum Master, Release Train Engineer, Portfolio Manager, Transformation Manager, Product Owner, Product Manager, Quality Manager and Quality Engineer roles across Germany, Austria, Switzerland and the Netherlands — pulled from the free Adzuna Jobs…",
+      "language": "JavaScript",
+      "topics": [],
+      "homepage": "https://sujguha.github.io/job-market/",
+      "created_at": "2026-09-08T12:52:30Z"
+    },
+    {
+      "name": "ersa-api",
+      "url": "https://github.com/Sujguha/ersa-api",
+      "description": "",
+      "summary": "FastAPI wrapper that exposes ERSA as a REST endpoint for the ServiceNow integration. See main.py — the scoring logic is currently a stub; replace runersaassessment() with your actual ERSA/LangChain pipeline.",
+      "language": "Python",
+      "topics": [],
+      "homepage": "",
+      "created_at": "2026-09-03T20:30:20Z"
+    },
+    {
+      "name": "Learning",
+      "url": "https://github.com/Sujguha/Learning",
+      "description": "",
+      "summary": "",
+      "language": "",
+      "topics": [],
+      "homepage": "",
+      "created_at": "2026-08-24T12:51:13Z"
+    },
+    {
+      "name": "Mywebsite",
+      "url": "https://github.com/Sujguha/Mywebsite",
+      "description": "",
+      "summary": "A single-page portfolio built with plain HTML/CSS (no build step, no framework), styled as a dark \"release changelog\" — sections read like version history entries, projects read like changelog cards.",
+      "language": "HTML",
+      "topics": [],
+      "homepage": "",
+      "created_at": "2026-07-30T09:06:38Z"
+    }
+  ]
+}
