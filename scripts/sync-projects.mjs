@@ -6,7 +6,7 @@
 // Only fields that change when a project changes are stored (no push dates),
 // so the file, and the site, only get a new commit when there is news.
 
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 const USER = "Sujguha";
 const OUT = "data/projects.json";
@@ -76,6 +76,7 @@ async function main() {
     console.log("No changes (" + projects.length + " projects).");
     return;
   }
+  await mkdir("data", { recursive: true });
   await writeFile(OUT, next);
   console.log("Updated " + OUT + ": " + projects.map((p) => p.name).join(", "));
 }
