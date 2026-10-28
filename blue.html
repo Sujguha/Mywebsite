@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue — Digital Release Manager | Sujoy G.</title>
+<meta name="description" content="Blue is an AI digital release manager that does the routine work of enterprise release management and leaves every decision to a human.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151A;
+    --surface: #1A1F27;
+    --surface-2: #20262F;
+    --border: #2B323D;
+    --text: #E7EAEE;
+    --text-dim: #8A93A3;
+    --text-faint: #5B6472;
+    --go: #3FD9A0;
+    --hold: #F0A83A;
+    --risk: #E5637A;
+    --heading: #FFFFFF;
+    --topbar-bg: rgba(18,21,26,0.85);
+    --on-go: #0C1310;
+    --grid-opacity: 0.15;
+    color-scheme: dark;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:var(--grid-opacity);
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:var(--topbar-bg);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .brand{font-family:var(--mono); font-size:13px; color:var(--text-dim); letter-spacing:0.5px;}
+  .brand b{color:var(--text);}
+  .nav{display:flex; gap:22px; font-family:var(--mono); font-size:12.5px;}
+  .nav a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .nav a:hover{color:var(--go);}
+  .nav a.active{color:var(--go);}
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--text-faint); padding-top:32px; margin-bottom:8px;}
+  .breadcrumb a{color:var(--text-dim); text-decoration:none;}
+  .breadcrumb a:hover{color:var(--go);}
+
+  .hero{padding:8px 0 48px; border-bottom:1px solid var(--border);}
+  .status-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.5px;
+    color:var(--go); background:rgba(63,217,160,0.08);
+    border:1px solid rgba(63,217,160,0.35);
+    padding:5px 12px; border-radius:3px; margin-bottom:24px;
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--go); box-shadow:0 0 8px var(--go); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:38px; line-height:1.15;
+    letter-spacing:-0.5px; margin-bottom:14px; color:var(--heading);
+  }
+  .tagline{font-size:17px; color:var(--text-dim); max-width:680px; margin-bottom:20px;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:24px; font-family:var(--mono); font-size:12.5px; color:var(--text-dim);}
+  .hero-meta div span{color:var(--text);}
+
+  section{padding:48px 0; border-bottom:1px solid var(--border);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:28px;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--go);}
+  .sec-title{font-size:20px; font-weight:700; color:var(--heading);}
+
+  .body-copy{color:var(--text-dim); font-size:15.5px; max-width:720px;}
+  .body-copy p{margin-bottom:16px;}
+  .body-copy strong{color:var(--text); font-weight:600;}
+  .body-copy ul{margin:0 0 16px 20px;}
+  .body-copy li{margin-bottom:8px;}
+
+  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .stack-group-title{font-family:var(--mono); font-size:12px; color:var(--hold); letter-spacing:0.5px; margin-bottom:12px;}
+  .stack-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .stack-pill{
+    font-size:13px; color:var(--text-dim); background:var(--surface);
+    border:1px solid var(--border); padding:5px 12px; border-radius:4px;
+  }
+
+  .note-box{
+    background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--hold);
+    border-radius:4px; padding:16px 20px; font-size:14px; color:var(--text-dim); max-width:720px;
+  }
+  .note-box strong{color:var(--text);}
+
+  .contact{padding:56px 0 72px; border-bottom:none;}
+  .contact-title{font-size:24px; font-weight:700; color:var(--heading); margin-bottom:12px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px;}
+  .contact-btn{
+    font-family:var(--mono); font-size:13px; text-decoration:none;
+    padding:11px 18px; border-radius:4px; border:1px solid var(--border);
+    color:var(--text); transition:all .15s;
+  }
+  .contact-btn.primary{background:var(--go); color:var(--on-go); border-color:var(--go); font-weight:600;}
+  .contact-btn:hover{border-color:var(--go); color:var(--go);}
+  .contact-btn.primary:hover{color:var(--on-go); opacity:0.9;}
+
+  footer{padding:24px 0; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    h1{font-size:28px;}
+    .stack-grid{grid-template-columns:1fr;}
+    .nav{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status-dot{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- light theme ---------- */
+  :root[data-theme="light"]{
+    --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F4; --border:#D9DEE5;
+    --text:#1B2129; --text-dim:#525C6A; --text-faint:#687280;
+    --go:#087A53; --hold:#9A5800; --risk:#B8304B;
+    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF; --grid-opacity:0.35;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme]){
+    --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F4; --border:#D9DEE5;
+    --text:#1B2129; --text-dim:#525C6A; --text-faint:#687280;
+    --go:#087A53; --hold:#9A5800; --risk:#B8304B;
+    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF; --grid-opacity:0.35;
+    color-scheme:light;
+    }
+  }
+  .top-right{display:flex; align-items:center; gap:22px;}
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:32px; height:32px; flex-shrink:0; cursor:pointer;
+    background:var(--surface); color:var(--text-dim);
+    border:1px solid var(--border); border-radius:6px;
+    transition:color .15s, border-color .15s;
+  }
+  .theme-toggle:hover{color:var(--go); border-color:var(--go);}
+  .theme-toggle:focus-visible{outline:2px solid var(--go); outline-offset:2px;}
+  .theme-toggle svg{width:16px; height:16px;}
+  .theme-toggle .i-sun{display:none;}
+  :root[data-theme="light"] .theme-toggle .i-sun{display:block;}
+  :root[data-theme="light"] .theme-toggle .i-moon{display:none;}
+</style>
+<script>
+  (function(){
+    try{ var t = localStorage.getItem("theme"); }catch(e){}
+    if (t !== "light" && t !== "dark") t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">Sujoy Guha</div>
+    <div class="top-right">
+    <div class="nav">
+      <a href="index.html#about">about</a>
+      <a href="index.html#experience">experience</a>
+      <a href="index.html#projects">projects</a>
+      <a href="work.html">tools</a>
+      <a href="index.html#skills">skills</a>
+      <a href="index.html#certifications">certifications</a>
+      <a href="articles.html">articles</a>
+      <a href="index.html#contact">contact</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch colour theme">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← back to home</a></div>
+
+  <section class="hero">
+    <div class="status-badge"><span class="status-dot"></span>PROJ-07 · INDEPENDENT BUILD</div>
+    <h1>Blue — the Digital Release Manager</h1>
+    <p class="tagline">An AI colleague for release and delivery managers. Blue does the routine work of enterprise release management (watching readiness, chasing owners, writing reports, scoring change risk, preparing Go/No-Go packs) and reports to a human. People make every decision that changes a release; Blue reads, talks and proposes.</p>
+    <div class="hero-meta">
+      <div>Built by <span>Sujoy G.</span></div>
+      <div>Works with <span>Jira · Polarion · Microsoft Teams</span></div>
+      <div>Status <span>v0.7.0 · in progress</span></div>
+    </div>
+  </section>
+
+  <section id="overview">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Why I built it</span></div>
+    <div class="body-copy">
+      <p>Much of a release manager's week goes on work that matters but doesn't need judgement: checking which tickets are still open before a cutover, chasing owners, assembling the weekly status report, pulling together the evidence for a Go/No-Go call. The judgement itself (is this release safe to ship?) is the part that should stay with a person.</p>
+      <p>Blue splits the job along that line. It takes the routine work and does it every day, consistently, and leaves every decision that changes the state of a release with a human. It is the next step after <a href="ersa.html" style="color:var(--go);">ERSA</a>: from one risk-scoring agent to a full digital colleague with its own governance.</p>
+    </div>
+  </section>
+
+  <section id="what-it-does">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">What Blue does</span></div>
+    <div class="body-copy">
+      <ul>
+        <li><strong>Daily readiness scan:</strong> checks every active release each weekday morning and raises a gap only when something is new or has got worse, so alerts stay worth reading.</li>
+        <li><strong>Owner chasing:</strong> sends a polite, specific nudge to the owner of an item that's blocking a release, and tracks how long it takes to resolve.</li>
+        <li><strong>Weekly status report:</strong> writes the report with an executive summary, traffic lights, risks and next steps, and produces it as a PDF.</li>
+        <li><strong>Change-risk pre-assessment:</strong> scores each change before the Change Advisory Board meets and suggests a recommendation for the board to consider.</li>
+        <li><strong>Go/No-Go pack:</strong> assembles the evidence for the release decision. Once a person decides, Blue proposes writing the decision back to the Jira release, and that change also waits for a human to approve it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="governance">
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Humans decide, Blue proposes</span></div>
+    <div class="body-copy">
+      <p>Every action Blue takes is checked against four autonomy tiers before it runs:</p>
+      <ul>
+        <li><strong>Tier 0, read:</strong> looking at releases, issues and risk. Always allowed.</li>
+        <li><strong>Tier 1, communicate:</strong> posts, drafts and comments. Allowed automatically, within rate limits, and can be stopped at any time with a global or per-release kill switch.</li>
+        <li><strong>Tier 2, change state:</strong> transitions, field edits, approvals. Never done on its own. Blue shows the exact change it wants to make, and it happens only after a person presses Approve. Unanswered requests expire after 24 hours.</li>
+        <li><strong>Tier 3, forbidden:</strong> deletes, permission changes and deployments. Blocked outright, as is any action Blue doesn't recognise.</li>
+      </ul>
+      <p>Blue reaches Jira and Polarion only through my Release Governance MCP server, so every request is already limited to approved projects and tools before Blue's own rules even apply.</p>
+    </div>
+  </section>
+
+  <section id="trust">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Audit, privacy and control</span></div>
+    <div class="body-copy">
+      <ul>
+        <li><strong>Append-only audit log:</strong> every action, including every refusal, is recorded with Blue's stated reasoning. A proposed change, the human decision and the applied change form one unbroken history.</li>
+        <li><strong>Blue is change-controlled too:</strong> its instructions, rules and model are versioned together as an "agent release", and everything Blue produces names the version that produced it.</li>
+        <li><strong>Evaluates releases, never people:</strong> the only personal data kept is a display name for addressing someone, and names are replaced after 90 days. A plain-language note explains all of this for the works council (Betriebsrat).</li>
+        <li><strong>EU data residency:</strong> it runs on EU-located infrastructure, with storage pinned to the EU.</li>
+        <li><strong>Admin dashboard:</strong> releases overview, pending approvals, audit log, KPIs, kill switches, routine schedule and alerts in one place. Blue measures its own value too: how early it spots gaps, how fast chases resolve, how often its alerts are false alarms, and how often its proposed changes are approved.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Stack &amp; approach</span></div>
+    <div class="stack-grid">
+      <div>
+        <div class="stack-group-title">Core</div>
+        <div class="stack-list">
+          <span class="stack-pill">TypeScript</span>
+          <span class="stack-pill">Cloudflare Workers</span>
+          <span class="stack-pill">D1 / R2 (EU)</span>
+          <span class="stack-pill">Model Context Protocol</span>
+          <span class="stack-pill">Vitest</span>
+        </div>
+      </div>
+      <div>
+        <div class="stack-group-title">Connects to</div>
+        <div class="stack-list">
+          <span class="stack-pill">Jira</span>
+          <span class="stack-pill">Polarion</span>
+          <span class="stack-pill">Microsoft Teams</span>
+          <span class="stack-pill">Release Governance MCP server</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="status">
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Where it stands</span></div>
+    <div class="note-box">
+      <strong>Version 0.7.0.</strong> Every planned phase is built and covered by 162 automated tests, and Blue runs end to end against a test copy of release data. Connecting it to a live Jira through the governance server is the next step. Slack and email-digest channels are still to come.
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-title">Interested in how this applies to your program?</div>
+    <div class="contact-links">
+      <a class="contact-btn primary" href="https://linkedin.com/in/sujoy-g-transformation" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="contact-btn primary" href="https://github.com/Sujguha" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="contact-btn primary" href="mailto:Sujoy.guha2@gmail.com">Email ↗</a>
+      <a class="contact-btn" href="articles.html">Read the articles →</a>
+      <a class="contact-btn" href="index.html">Back to home →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>built &amp; maintained by Sujoy G. · Munich, Germany</footer>
+
+<script>
+  (function(){
+    var root = document.documentElement, btn = document.getElementById("theme-toggle");
+    function label(){ btn.setAttribute("aria-label", root.getAttribute("data-theme") === "light" ? "Switch to dark mode" : "Switch to light mode"); }
+    label();
+    btn.addEventListener("click", function(){
+      var t = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", t);
+      try{ localStorage.setItem("theme", t); }catch(e){}
+      label();
+    });
+    if (window.matchMedia) matchMedia("(prefers-color-scheme: light)").addEventListener("change", function(e){
+      var saved; try{ saved = localStorage.getItem("theme"); }catch(err){}
+      if (!saved){ root.setAttribute("data-theme", e.matches ? "light" : "dark"); label(); }
+    });
+  })();
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ A single-page portfolio built with plain HTML/CSS (no build step, no framework),
 |-----------------|------------------------------------------------------------------------------|
 | `index.html`    | Home page — About, Experience, Projects, Skills, Certifications, Contact    |
 | `ersa.html`     | Subpage on ERSA (Enterprise Release Stability Agent), a LangChain-based agentic tool for release governance decisioning |
+| `blue.html`     | Subpage on Blue, the Digital Release Manager: an AI agent that runs routine release-management work and leaves every decision to a human (code lives in a private repo, so it's added on the Tools page via `CURATED` with `private: true`) |
 | `work.html`     | Tools — every public project, pulled live from the GitHub API on each visit (forks, empty repos and this site's repo are hidden) |
 | `articles.html` | Subpage listing published articles (LinkedIn Pulse) and work in progress   |
 | `profile.png`   | Profile photo used in the hero section of `index.html`                      |
@@ -32,6 +33,8 @@ A single-page portfolio built with plain HTML/CSS (no build step, no framework),
 `work.html` fetches `api.github.com/users/Sujguha/repos` in the visitor's browser, so a new public repo appears automatically with its GitHub description, language, topics and homepage link. To give a project a proper title, write-up, stack tags or a live-site button, add an entry to the `CURATED` object in the page's script. If GitHub's API is unreachable, the page falls back to the curated list.
 
 **Automatic sync (GitHub Action):** `.github/workflows/sync-projects.yml` runs every 6 hours (or on demand from the Actions tab → *Sync projects* → *Run workflow*). It runs `scripts/sync-projects.mjs`, which writes `data/projects.json` with every public repo and a short summary from its README, and commits it only when something changed (a new repo, a new description, README intro, topics or website). The Tools page uses that summary for repos with no GitHub description, and shows the snapshot when GitHub's API doesn't respond.
+
+To show a project whose repo is private (GitHub's public list won't include it), give its `CURATED` entry `private: true` and a `slug` to show in place of the repo name.
 
 To hide a repo, add its name to `HIDE`. Setting a repo's **Website** field on GitHub makes an "Open live site" button appear.
 

@@ -235,6 +235,15 @@
   // Hand-written details for known repos. Anything not listed here still
   // appears automatically, using its GitHub description.
   var CURATED = {
+    "Blue": {
+      title: "Blue — the Digital Release Manager",
+      desc: "An AI digital release manager. Blue runs the routine work of enterprise release management: a daily readiness scan, owner chasing, the weekly status report as a PDF, change-risk pre-assessment for the CAB, and Go/No-Go packs. It reports to a human Release and Delivery Manager. Anything that would change a release in Jira or Polarion is shown as a preview and waits for a person to approve it, and every action is written to an append-only audit log. It runs on EU infrastructure and evaluates releases, never people.",
+      stack: ["TypeScript", "Cloudflare Workers", "D1 / R2", "MCP", "Jira", "Polarion", "Microsoft Teams"],
+      read: "blue.html", readLabel: "About Blue",
+      slug: "private repository",
+      private: true,   // not on GitHub's public list, so always shown from here
+      state: "wip", pushed: "2026-10-28T09:22:49Z"
+    },
     "sentoarc": {
       title: "SENtoArc",
       desc: "Validates and auto-fixes SCORM packages exported from SAP Enable Now so they import cleanly into WalkMe Learning Arc. Upload a package and it checks the manifest, repairs what Learning Arc would reject, and hands back a fixed SCORM 1.2 file with a report; PDFs and other non-SCORM files are wrapped into SCORM automatically. Free, Pro and Enterprise tiers: bulk and ZIP-of-ZIPs upload, CSV reports and translation-path rewrites on Pro; shared projects with admin/editor/viewer roles, an audit log and data retention on Enterprise, billed through Stripe. Files are stored in the EU.",
@@ -295,7 +304,7 @@
         '<div class="body">' +
           '<span class="state '+esc(p.state)+'">'+esc(STATE_LABEL[p.state] || p.state)+'</span>' +
           '<h2>'+esc(p.title)+'</h2>' +
-          '<div class="slug">'+esc(USER+"/"+p.name)+'</div>' +
+          '<div class="slug">'+esc(p.slug || USER+"/"+p.name)+'</div>' +
           '<p class="desc">'+esc(p.desc)+'</p>' +
           (stack ? '<div class="stack">'+stack+'</div>' : '') +
           (links.length ? '<div class="links">'+links.join("")+'</div>' : '') +
@@ -369,6 +378,9 @@
         if (r.fork || r.archived || HIDE.indexOf(r.name) !== -1) return;
         if (!CURATED[r.name] && r.size === 0) return;   // empty, undocumented repo
         items.push(toItem(r));
+      });
+      Object.keys(CURATED).forEach(function(name){   // private projects GitHub doesn't list
+        if (CURATED[name].private) items.push(Object.assign({ name: name }, CURATED[name]));
       });
       render(items);
       setSync("ok", "Synced with GitHub just now · " + items.length + " projects");
