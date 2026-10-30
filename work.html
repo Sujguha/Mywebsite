@@ -23,7 +23,6 @@
     --heading: #FFFFFF;
     --topbar-bg: rgba(18,21,26,0.85);
     --on-go: #0C1310;
-    --grid-opacity: 0.15;
     color-scheme: dark;
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
@@ -36,17 +35,6 @@
     font-family:var(--sans);
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
-  }
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 48px 48px;
-    opacity:var(--grid-opacity);
-    pointer-events:none;
-    z-index:0;
   }
   a{color:inherit;}
   .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
@@ -142,7 +130,7 @@
     --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F4; --border:#D9DEE5;
     --text:#1B2129; --text-dim:#525C6A; --text-faint:#687280;
     --go:#087A53; --hold:#9A5800; --risk:#B8304B;
-    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF; --grid-opacity:0.35;
+    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF;
     color-scheme:light;
   }
   @media (prefers-color-scheme: light){
@@ -150,7 +138,7 @@
     --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F4; --border:#D9DEE5;
     --text:#1B2129; --text-dim:#525C6A; --text-faint:#687280;
     --go:#087A53; --hold:#9A5800; --risk:#B8304B;
-    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF; --grid-opacity:0.35;
+    --heading:#0E1319; --topbar-bg:rgba(246,247,249,0.88); --on-go:#FFFFFF;
     color-scheme:light;
     }
   }
