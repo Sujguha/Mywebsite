@@ -2,6 +2,16 @@
   "user": "Sujguha",
   "projects": [
     {
+      "name": "Jira-Migration",
+      "url": "https://github.com/Sujguha/Jira-Migration",
+      "description": "",
+      "summary": "The prototype maps Jira configuration from two JSON inventories. It exports a migration plan. The Python connector discovers Jira Data Center configuration and previews issue mappings from a machine that can reach Jira. Both connector commands are read-only.",
+      "language": "",
+      "topics": [],
+      "homepage": "",
+      "created_at": "2026-11-20T08:49:44Z"
+    },
+    {
       "name": "sentoarc",
       "url": "https://github.com/Sujguha/sentoarc",
       "description": "",
