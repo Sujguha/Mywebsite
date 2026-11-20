@@ -223,14 +223,20 @@
   // Hand-written details for known repos. Anything not listed here still
   // appears automatically, using its GitHub description.
   var CURATED = {
+    "Jira-Migration": {
+      title: "Jira Migration Studio",
+      desc: "A planner for moving Jira configuration from one instance to another. Load the source and destination inventories, then a step-by-step wizard maps projects, work types, statuses, workflows, custom fields, screens, permission schemes, users and groups, and other objects, showing what's still unmapped. Export the finished migration plan. A small read-only Python connector, run inside the company network, collects a Jira Data Center inventory and previews how real issues would map. Tokens never leave that machine, and the web app makes no network calls.",
+      stack: ["JavaScript", "Python", "Jira Data Center", "REST API", "Netlify"],
+      state: "wip", pushed: "2026-11-20T16:57:55Z"
+    },
     "Blue": {
       title: "Blue — the Digital Release Manager",
-      desc: "An AI digital release manager. Blue runs the routine work of enterprise release management: a daily readiness scan, owner chasing, the weekly status report as a PDF, change-risk pre-assessment for the CAB, and Go/No-Go packs. It reports to a human Release and Delivery Manager. Anything that would change a release in Jira or Polarion is shown as a preview and waits for a person to approve it, and every action is written to an append-only audit log. It runs on EU infrastructure and evaluates releases, never people.",
-      stack: ["TypeScript", "Cloudflare Workers", "D1 / R2", "MCP", "Jira", "Polarion", "Microsoft Teams"],
+      desc: "An AI digital release manager. Blue runs the routine work of enterprise release management: a daily readiness scan, owner chasing, the weekly status report as a PDF, change-risk pre-assessment for the CAB, and Go/No-Go packs with milestone gates. It reports to a human Release and Delivery Manager. Each team links its own Jira or ServiceNow on a Connect page, with its data kept separate. Anything that would change a release is shown as a preview and waits for a person to approve it, and every action is written to an append-only audit log. Deployed on Cloudflare in the EU; it evaluates releases, never people.",
+      stack: ["TypeScript", "Cloudflare Workers", "D1 / R2 (EU)", "MCP", "Jira", "ServiceNow", "Polarion", "Microsoft Teams"],
       read: "blue.html", readLabel: "About Blue",
       slug: "private repository",
       private: true,   // not on GitHub's public list, so always shown from here
-      state: "wip", pushed: "2026-10-28T09:22:49Z"
+      state: "wip", pushed: "2026-11-20T10:16:49Z"
     },
     "sentoarc": {
       title: "SENtoArc",

@@ -198,8 +198,8 @@
     <p class="tagline">An AI colleague for release and delivery managers. Blue does the routine work of enterprise release management (watching readiness, chasing owners, writing reports, scoring change risk, preparing Go/No-Go packs) and reports to a human. People make every decision that changes a release; Blue reads, talks and proposes.</p>
     <div class="hero-meta">
       <div>Built by <span>Sujoy G.</span></div>
-      <div>Works with <span>Jira · Polarion · Microsoft Teams</span></div>
-      <div>Status <span>v0.7.0 · in progress</span></div>
+      <div>Works with <span>Jira · ServiceNow · Polarion · Microsoft Teams</span></div>
+      <div>Status <span>v0.11 · deployed, in progress</span></div>
     </div>
   </section>
 
@@ -219,7 +219,8 @@
         <li><strong>Owner chasing:</strong> sends a polite, specific nudge to the owner of an item that's blocking a release, and tracks how long it takes to resolve.</li>
         <li><strong>Weekly status report:</strong> writes the report with an executive summary, traffic lights, risks and next steps, and produces it as a PDF.</li>
         <li><strong>Change-risk pre-assessment:</strong> scores each change before the Change Advisory Board meets and suggests a recommendation for the board to consider.</li>
-        <li><strong>Go/No-Go pack:</strong> assembles the evidence for the release decision. Once a person decides, Blue proposes writing the decision back to the Jira release, and that change also waits for a human to approve it.</li>
+        <li><strong>Go/No-Go pack:</strong> assembles the evidence for the release decision, including milestone gates. Once a person decides, Blue proposes writing the decision back to the Jira release, and that change also waits for a human to approve it.</li>
+        <li><strong>Dependency watch:</strong> when a blocking issue is finished, Blue notices and proposes labelling the work that was waiting on it as cleared, again only after a person approves.</li>
       </ul>
     </div>
   </section>
@@ -234,7 +235,7 @@
         <li><strong>Tier 2, change state:</strong> transitions, field edits, approvals. Never done on its own. Blue shows the exact change it wants to make, and it happens only after a person presses Approve. Unanswered requests expire after 24 hours.</li>
         <li><strong>Tier 3, forbidden:</strong> deletes, permission changes and deployments. Blocked outright, as is any action Blue doesn't recognise.</li>
       </ul>
-      <p>Blue reaches Jira and Polarion only through my Release Governance MCP server, so every request is already limited to approved projects and tools before Blue's own rules even apply.</p>
+      <p>Blue reaches Jira, ServiceNow and Polarion only through my Release Governance MCP server, so every request is already limited to approved projects and tools before Blue's own rules even apply. Each team links its own Jira or ServiceNow on Blue's Connect page, and each connection's data is kept separate from every other.</p>
     </div>
   </section>
 
@@ -246,7 +247,7 @@
         <li><strong>Blue is change-controlled too:</strong> its instructions, rules and model are versioned together as an "agent release", and everything Blue produces names the version that produced it.</li>
         <li><strong>Evaluates releases, never people:</strong> the only personal data kept is a display name for addressing someone, and names are replaced after 90 days. A plain-language note explains all of this for the works council (Betriebsrat).</li>
         <li><strong>EU data residency:</strong> it runs on EU-located infrastructure, with storage pinned to the EU.</li>
-        <li><strong>Admin dashboard:</strong> releases overview, pending approvals, audit log, KPIs, kill switches, routine schedule and alerts in one place. Blue measures its own value too: how early it spots gaps, how fast chases resolve, how often its alerts are false alarms, and how often its proposed changes are approved.</li>
+        <li><strong>Admin dashboard:</strong> a dense, dark operations console with a releases overview (Red/Amber/Green filters, progress, blockers, untested work), pending approvals, audit log, KPIs, kill switches, routine schedule and alerts in one place. Blue measures its own value too: how early it spots gaps, how fast chases resolve, how often its alerts are false alarms, and how often its proposed changes are approved.</li>
       </ul>
     </div>
   </section>
@@ -268,6 +269,7 @@
         <div class="stack-group-title">Connects to</div>
         <div class="stack-list">
           <span class="stack-pill">Jira</span>
+          <span class="stack-pill">ServiceNow</span>
           <span class="stack-pill">Polarion</span>
           <span class="stack-pill">Microsoft Teams</span>
           <span class="stack-pill">Release Governance MCP server</span>
@@ -279,7 +281,7 @@
   <section id="status">
     <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Where it stands</span></div>
     <div class="note-box">
-      <strong>Version 0.7.0.</strong> Every planned phase is built and covered by 162 automated tests, and Blue runs end to end against a test copy of release data. Connecting it to a live Jira through the governance server is the next step. Slack and email-digest channels are still to come.
+      <strong>Version 0.11.</strong> Every planned phase is built, and Blue is deployed on Cloudflare with its database and report storage held in the EU. Teams can link their own Jira or ServiceNow through the Connect page. So far it has been exercised against test release data; checks for real-world Jira data are documented before it's pointed at a live instance. Slack and email-digest channels are still to come.
     </div>
   </section>
 
